@@ -1,0 +1,35 @@
+@font-face {
+    font-family: 'PlumbBoldC';
+    src: url('plumbboldc-webfont.eot');
+    src: url('plumbboldc-webfont.eot?#iefix') format('embedded-opentype'),
+         url('plumbboldc-webfont.woff') format('woff'),
+         url('plumbboldc-webfont.ttf') format('truetype'),
+         url('plumbboldc-webfont.svg#plumbboldcregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PlumbLightC';
+    src: url('plumblightc-webfont.eot');
+    src: url('plumblightc-webfont.eot?#iefix') format('embedded-opentype'),
+         url('plumblightc-webfont.woff') format('woff'),
+         url('plumblightc-webfont.ttf') format('truetype'),
+         url('plumblightc-webfont.svg#plumblightcregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'PlumbMediumC';
+    src: url('plumbmediumc-webfont.eot');
+    src: url('plumbmediumc-webfont.eot?#iefix') format('embedded-opentype'),
+         url('plumbmediumc-webfont.woff') format('woff'),
+         url('plumbmediumc-webfont.ttf') format('truetype'),
+         url('plumbmediumc-webfont.svg#plumbmediumcregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
