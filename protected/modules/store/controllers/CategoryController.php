@@ -23,7 +23,8 @@ class CategoryController extends Controller
 	/**
 	 * @var array Eav attributes used in http query
 	 */
-	private $_eavAttributes;
+    private $_eavAttributes;
+    private $_categoryEavAttributes;
 
 	/**
 	 * @var array
@@ -108,8 +109,17 @@ class CategoryController extends Controller
 	{
 		$this->query = new StoreProduct(null);
 		$this->query->attachBehaviors($this->query->behaviors());
+//        DebugBreak();
 		$this->query->applyAttributes($this->activeAttributes)
-			->active();
+			    ->active();
+        $arr = Yii::app()->db->createCommand("SELECT attribute_id FROM storecategoryattribute WHERE category_id = ".$this->model->id)->queryColumn();
+        foreach($this->_eavAttributes as $key => $obj){
+            $isDelete = true;
+            foreach($arr as $val){
+                if($obj->id == $val) $isDelete = false;
+            }
+            if($isDelete) unset($this->_eavAttributes[$key]);
+        }
 
 		if($data instanceof StoreCategory)
 			$this->query->applyCategories($this->model);
@@ -203,12 +213,14 @@ class CategoryController extends Controller
 		$typesUsed = $builder->createFindCommand(StoreProduct::tableName(), $criteria)->queryColumn();
 
 		// Find attributes by type
-		$criteria = new CDbCriteria;
-		$criteria->addInCondition('types.type_id', $typesUsed);
+//		$criteria = new CDbCriteria;
+//		$criteria->addInCondition('types.type_id', $typesUsed);
 		$query = StoreAttribute::model()
 			->useInFilter()
-			->with(array('types', 'options'))
-			->findAll($criteria);
+//			->with(array('types', 'options'))
+			->findAll(
+//            $criteria
+            );
 
 		$this->_eavAttributes = array();
 		foreach($query as $attr)

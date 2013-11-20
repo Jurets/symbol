@@ -128,6 +128,7 @@ class StoreAttribute extends BaseModel
 			'options'        => array(self::HAS_MANY, 'StoreAttributeOption', 'attribute_id', 'order'=>'options.position ASC', 'scopes'=>'applyTranslateCriteria'),
 			// Used in types
 			'types'          => array(self::HAS_MANY, 'StoreTypeAttribute', 'attribute_id'),
+            'categories'          => array(self::HAS_MANY, 'StoreCategoryAttribute', 'attribute_id'),
 		);
 	}
 

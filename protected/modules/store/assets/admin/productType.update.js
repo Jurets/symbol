@@ -3,6 +3,10 @@
 $("#StoreProductTypeForm").submit(function(){
     $("#attributes option").attr('selected', 'selected');
 });
+// On form submit select all options
+$("#productCategoryUpdateForm").submit(function(){
+    $("#attributes option").attr('selected', 'selected');
+});
 
 // Connect lists
 $("#allAttributes").delegate('option', 'click', function(){
@@ -18,6 +22,14 @@ $("#attributes").delegate('option', 'click', function(){
 
 // Process checked categories
 $("#StoreProductTypeForm").submit(function(){
+    var checked = $("#StoreTypeCategoryTree li.jstree-checked");
+    checked.each(function(i, el){
+        var cleanId = $(el).attr("id").replace('StoreTypeCategoryTreeNode_', '');
+        $("#StoreProductTypeForm").append('<input type="hidden" name="categories[]" value="' + cleanId + '" />');
+    });
+});
+// Process checked categories
+$("#productCategoryUpdateForm").submit(function(){
     var checked = $("#StoreTypeCategoryTree li.jstree-checked");
     checked.each(function(i, el){
         var cleanId = $(el).attr("id").replace('StoreTypeCategoryTreeNode_', '');

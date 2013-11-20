@@ -42,8 +42,9 @@ $this->breadcrumbs[] = $this->model->name;
 				Сортировать по:  цене (<?php echo CHtml::link('возр',array("/store/category/view", "url"=>$this->model->url, 'sort'=>'price' )); ?>/
                 <?php echo CHtml::link('убыв',array("/store/category/view", "url"=>$this->model->url, 'sort'=>'price.desc' )); ?>)
 			</div>
+            
 			<div class="filter_right">
-				<div>
+<!--				<div>
 					<label for="">специфика</label>
 					<select>
 						<option>Не выбрана</option>
@@ -58,15 +59,30 @@ $this->breadcrumbs[] = $this->model->name;
 						<option>1</option>
 						<option>2</option>
 					</select>
-				</div>
-				<div>
+				</div>-->
+            <?php
+                $this->widget('application.modules.store.widgets.filter.SFilterRenderer', array(
+                    'model'=>$this->model,
+                    'attributes'=>$this->eavAttributes,
+                    'view'=>'symbol',
+                ));
+            ?>
+            <script type="text/javascript">
+            
+                function applyCategorySorter(el)
+                {
+                window.location = $(el).val();
+                } 
+                
+            </script>
+<!--				<div>
 					<label for="">цвет</label>
 					<select>
 						<option></option>
 						<option>1</option>
 						<option>2</option>
 					</select>
-				</div>
+				</div>-->
 			</div>
 		</div>
 
@@ -97,4 +113,5 @@ $this->breadcrumbs[] = $this->model->name;
 		?>
 		</div>
 	</div>
-</div><!-- catalog_with_sidebar end -->
+<!--</div>-->
+<!-- catalog_with_sidebar end -->
