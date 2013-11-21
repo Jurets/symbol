@@ -7,10 +7,10 @@ return array(
 	'name'=>'EximusCommerce',
 	'components'=>array(
 		'db'=>array(
-			'connectionString' => 'mysql:host=localhost;dbname=my_db',
+			'connectionString' => 'mysql:host=localhost;dbname=status_symbol',
 			'emulatePrepare'   => true,
 			'username'         => 'root',
-			'password'         => 'mysqlpass',
+			'password'         => '',
 			'charset'          => 'utf8',
 		),
 	),

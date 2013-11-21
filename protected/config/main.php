@@ -76,8 +76,8 @@ return array(
 		),
 		'db'=>array(
 			'connectionString'=>'mysql:host=localhost;dbname=status_symbol',
-			'username'=>'status_symbol',
-			'password'=>'mcwQqja3Zq9nqGVn',
+			'username'=>'root',
+			'password'=>'',
 			'enableProfiling'       => YII_DEBUG, // Disable in production
 			'enableParamLogging'    => YII_DEBUG, // Disable in production
 			'emulatePrepare'        => true,
