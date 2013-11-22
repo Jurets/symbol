@@ -21,6 +21,7 @@ class SFilterRenderer extends CWidget
      * @var array of StoreAttribute models
      */
     public $attributes;
+    public $categoryAttr = array();
 
     /**
      * @var StoreCategory
@@ -57,10 +58,10 @@ class SFilterRenderer extends CWidget
      */
     public function run()
     {
-        $arr = Yii::app()->db->createCommand("SELECT attribute_id FROM storecategoryattribute WHERE category_id = ".$this->model->id)->queryColumn();
+        $this->categoryAttr = Yii::app()->db->createCommand("SELECT attribute_id FROM storecategoryattribute WHERE category_id = ".$this->model->id)->queryColumn();
         foreach($this->attributes as $key => $obj){
             $isDelete = true;
-            foreach($arr as $val){
+            foreach($this->categoryAttr as $val){
                 if($obj->id == $val) $isDelete = false;
             }
             if($isDelete) unset($this->attributes[$key]);
@@ -148,14 +149,32 @@ class SFilterRenderer extends CWidget
                 'selectMany' => (boolean) $attribute->select_many,
                 'filters'    => array()
             );
+            
+            $arr = Yii::app()->db->createCommand("
+                                     SELECT DISTINCT
+                                      E.attribute, E.value nval, A.id, T.value wval
+                                      FROM StoreProductCategoryRef R 
+                                        LEFT JOIN storeproduct P ON P.id = R.product
+                                        LEFT JOIN storeproductattributeeav E ON E.entity = P.id
+                                        LEFT JOIN storeattribute A ON A.name = E.attribute
+                                        LEFT JOIN storeattributeoptiontranslate T ON T.object_id = E.value AND T.language_id = :lang
+                                      WHERE R.category = :cat
+                                      AND A.id = :attr;
+                                      ")->queryAll(true, array('lang'=>Yii::app()->languageManager->active->id, 'cat' => $this->model->id, 'attr'=>$attribute->id));
+            
             foreach($attribute->options as $option)
             {
-                $data[$attribute->name]['filters'][] = array(
-                    'title'      => $option->value,
-                    'count'      => $this->countAttributeProducts($attribute, $option),
-                    'queryKey'   => $attribute->name,
-                    'queryParam' => $option->id,
-                );
+                foreach($arr as $val){
+                    if($option->value == $val['nval'] || $option->value == $val['wval']){ 
+                                
+                        $data[$attribute->name]['filters'][] = array(
+                            'title'      => $option->value,
+                            'count'      => $this->countAttributeProducts($attribute, $option),
+                            'queryKey'   => $attribute->name,
+                            'queryParam' => $option->id,
+                        );
+                    }
+                }
             }
         }
         return $data;
