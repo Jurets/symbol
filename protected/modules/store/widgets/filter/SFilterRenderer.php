@@ -154,10 +154,10 @@ class SFilterRenderer extends CWidget
                                      SELECT DISTINCT
                                       E.attribute, E.value nval, A.id, T.value wval
                                       FROM StoreProductCategoryRef R 
-                                        LEFT JOIN storeproduct P ON P.id = R.product
-                                        LEFT JOIN storeproductattributeeav E ON E.entity = P.id
-                                        LEFT JOIN storeattribute A ON A.name = E.attribute
-                                        LEFT JOIN storeattributeoptiontranslate T ON T.object_id = E.value AND T.language_id = :lang
+                                        LEFT JOIN StoreProduct P ON P.id = R.product
+                                        LEFT JOIN StoreProductAttributeEAV E ON E.entity = P.id
+                                        LEFT JOIN StoreAttribute A ON A.name = E.attribute
+                                        LEFT JOIN StoreAttributeOptionTranslate T ON T.object_id = E.value AND T.language_id = :lang
                                       WHERE R.category = :cat
                                       AND A.id = :attr;
                                       ")->queryAll(true, array('lang'=>Yii::app()->languageManager->active->id, 'cat' => $this->model->id, 'attr'=>$attribute->id));
